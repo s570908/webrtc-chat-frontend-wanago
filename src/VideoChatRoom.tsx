@@ -8,8 +8,18 @@ interface Props {
 }
  
 export const VideoChatRoom: FunctionComponent<Props> = ({ localStream }) => {
-  const { peerConnection } = usePeerConnection(localStream);
+  const { peerConnection, guestStream } = usePeerConnection(localStream);
   useChatConnection(peerConnection);
  
-  return <VideoFeed mediaStream={localStream} isMuted={true} />;
+  return (
+    <div>
+      <VideoFeed mediaStream={localStream} isMuted={true} />
+      {guestStream && (
+        <div>
+          guest
+          <VideoFeed mediaStream={guestStream} />
+        </div>
+      )}
+    </div>
+  );
 };
